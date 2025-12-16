@@ -1,0 +1,50 @@
+[global]
+    font = "JetBrainsMono Nerd Font 11"
+    markup = full
+    format = "<b>%s</b>\n%b"
+
+    # Transparência suave
+    transparency = 15
+
+    # Layout
+    width = 320
+    origin = top-right
+    offset = (20, 20)
+    corner_radius = 5
+    padding = 5
+    horizontal_padding = 5
+    max_icon_size = 52
+
+
+    # Borda
+    frame_width = 2
+
+    # Ícones
+    icon_theme = "Adwaita"
+    enable_recursive_icon_lookup = true
+
+    # Separador
+    separator_height = 2
+
+    # Duplicatas
+    stack_duplicates = true
+
+# === PALETA DE CORES ===
+
+[urgency_low]
+    background = "#0A0D12""
+    foreground = "#9ddfff"
+    frame_color = "#289AA4"
+    timeout = 4
+
+[urgency_normal]
+    background = "#07080C"
+    foreground = "#cfe9ff"
+    frame_color = "#289AA4"
+    timeout = 6
+
+[urgency_critical]
+    background = "#0A0D12"
+    foreground = "#ff9dbb"
+    frame_color = "#c00033"
+    timeout = 0

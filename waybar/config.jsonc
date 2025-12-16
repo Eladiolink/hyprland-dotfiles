@@ -1,0 +1,371 @@
+{
+    "height": 10,
+    "margin-top": 5,
+    "margin-left": 7,
+    "margin-bottom": 1,
+    "margin-right": 7,
+    "mode": "dock",
+    "position": "top",
+    "gtk-layer-shell": true,
+    // "output": "eDP-1",
+    "reload_style_on_change": true,
+
+    //Modules layout
+
+	"modules-left": [  
+        "hyprland/workspaces"
+       ],
+	"modules-center": [
+        "mpris"
+        //-"custom/mpris"    
+        ],
+	"modules-right": [
+        "tray",
+        "pulseaudio",
+        "clock",
+        "battery",
+        "custom/notification",
+        "custom/battery-alert"
+        ],
+    
+    // Sourced modules
+    
+    "custom/monitor-off": {
+    "format": "  ",
+    "tooltip": "true",
+    "tooltip-format": "Desligar Monitor",
+    "on-click": "sleep 1 && hyprctl dispatch dpms off"
+},
+
+
+"battery": {
+    "format": "{icon} {capacity}%",      // formato padrão
+    "format-charging": "{icon} {capacity}% ⚡", // quando carregando
+    "format-full": "{icon} {capacity}% ✅",   // quando cheia
+    "on-click": "gnome-power-statistics", // opcional: abre monitor de energia
+    "low-threshold": 15,                 // alerta de bateria baixa
+    "format-low": "{icon} {capacity}% ⚠️", // mensagem de alerta
+    "tooltip": true,
+    "max-length": 10,
+    "icons": {
+        "empty": "",
+        "quarter": "",
+        "half": "",
+        "three-quarters": "",
+        "full": "",
+        "charging": ""
+    }
+},
+
+ "pulseaudio": {
+    "tooltip": true,
+    "scroll-step": 5,
+    "format": "{icon} {volume}%",
+    "format-muted": "<span color='#7aa2f7'> MUDO</span>",
+    "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+    "on-click-right": "~/.config/hypr/scripts/toggle_wiremix.sh",
+    "tooltip-format": "{desc}",
+    "format-icons": {
+    "alsa_output.pci-0000_00_1f.3.analog-stereo-muted": "<span color='#7aa2f7'></span>",
+        "headphone": "<span color='#7aa2f7'></span>",
+        "hands-free": "<span color='#7aa2f7'></span>",
+        "headset": "<span color='#7aa2f7'></span>",
+        "phone": "<span color='#7aa2f7'></span>",
+        "phone-muted": "<span color='#7aa2f7'></span>",
+        "portable": "<span color='#7aa2f7'></span>",
+        "car": "<span color='#7aa2f7'></span>",
+        "default": [
+            "<span color='#7aa2f7'></span>",
+            "<span color='#7aa2f7'></span>",
+            "<span color='#7aa2f7'></span>"
+        ]
+    
+    }
+},
+
+"custom/control_bat_universal": {
+    "exec": "~/.config/hypr/scripts/control_bat_universal.sh",
+    "return-type": "json",
+    "interval": 10, // Atualiza a cada 10 segundos
+    "format": "{}",
+    "class": "external-battery"
+},
+    "custom/memory_gb": {
+    "exec": "~/.config/hypr/scripts/mem_gb.sh",
+    "interval": 5, 
+    "format": "<span color=\"#7dcfff\"></span> {}", 
+    "tooltip-format": "{tooltip}", 
+    "on-click": "kitty btop",
+    "on-click-right": "killall btop"
+},
+"custom/disk_usage": {
+    "exec": "~/.config/hypr/scripts/disk_main.sh",
+    "interval": 30,
+    "return-type": "json", 
+    "format": "<span color=\"#e0af68\">󰋊</span> {text}",
+    "tooltip": true, 
+    "hide-if-empty": true,
+    "on-click": "gnome-disks"
+},
+
+"custom/cpu_temp": {
+    "format": "<span color='#f75f5f'></span>{}",
+    "exec": "~/.config/hypr/scripts/cpu_temp.sh",
+    "tooltip": true,
+    "return-type": "json",
+    "interval": 2
+},
+
+"custom/gpu_temp": {
+    "format": "<span color='#e0af68'> </span>{}",
+    "exec": "~/.config/hypr/scripts/gpu_temp.sh",
+    "tooltip": true,
+    "return-type": "json",
+    "interval": 2
+},
+
+"custom/gpu": {
+"exec": "~/.config/hypr/scripts/amd_gpu_usage.sh",
+"interval": 1,
+"format": "<span color='#00ff00'></span> {}",
+"tooltip": true
+  },
+
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "rotate": 0,
+    "format-icons": {
+        "activated": "<span color='#7dcfff'>󰥔</span>",
+        "deactivated": "<span color='#e0af68'></span>"
+    }
+},
+// Taskbar
+
+"wlr/taskbar": {
+    "format": "{icon}",
+    "icon-size": 18,
+    "tooltip-format": "{title}",
+    "on-click": "activate",
+    "on-click-middle": "close",
+    "ignore-list": []
+},
+
+"hyprland/workspaces": {
+    "disable-scroll": false,
+    "on-scroll-up": "hyprctl dispatch workspace e+1",
+    "on-scroll-down": "hyprctl dispatch workspace e-1",
+    "on-click": "activate",
+
+    "all-outputs": false,               // <--- AQUI: só monitor atual
+    "active-only": false,
+
+    "persistent-workspaces": {
+    },
+
+    "format": "{icon}",
+    "format-icons": {
+        "active": "<span font='12'>󰮯</span>",
+        "empty": "<span font='8'></span>",
+        "persistent": "<span color='#7aa2f7'>󰊠</span>",
+        "default": "<span color='#7aa2f7'>󰊠</span>"
+    }
+},
+    "network": {
+        "justify": "center",
+        "format-ethernet": "󰈀",
+        "tooltip-format-ethernet": "{ipaddr}",
+        "format-wifi": "󰤨",
+        "tooltip-format-wifi": "{essid} {frequency} {signalStrength}",
+        "format-disconnected": "󰤭",
+        "tooltip-format-disconnected": "Disconnected"
+    }, 
+	"backlight": {
+		"tooltip": false,
+		"format": " {}%",
+		"interval":1,
+        "on-scroll-up": "light -A 5",
+		"on-scroll-down": "light -U 5"
+	},
+    "battery": {
+        "states": {
+            "good": 95,
+            "warning": 30,
+            "critical": 10
+        },
+        "format": "{icon}  <span color='#F1F1F1'>{capacity}%</span>",
+        "format-charging": "<span color='#9ece6a'></span> <span color='#F1F1F1'>{capacity}%</span>",
+        "format-plugged": " <span color='#F1F1F1'>{capacity}</span>%",
+        "format-alt": "<span color='#F1F1F1'>{time}</span> {icon}",
+        "format-icons": [
+            "<span color='#f7768e'></span>", 
+            "<span color='#e0af68'></span>", 
+            "<span color='#e0af68'></span>", 
+            "<span color='#9ece6a'></span>", 
+            "<span color='#9ece6a'></span>"
+        ]
+    },
+    "clock": {
+        "format": "{:%R}",
+        "rotate": 0,
+        "format-alt": "{:%R 󰃭 %d·%m·%y}",
+        "tooltip-format": "<tt>{calendar}</tt>",
+        "calendar": {
+            "mode": "month",
+            "mode-mon-col": 3,
+            "on-scroll": 1,
+            "on-click-right": "mode",
+            "format": {
+                "months": "<span color='#ffead3'><b>{}</b></span>",
+                "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+                "today": "<span color='#ff6699'><b>{}</b></span>"
+            }
+        },
+        "actions": {
+            "on-click-right": "mode",
+            "on-click-forward": "tz_up",
+            "on-click-backward": "tz_down",
+            "on-scroll-up": "shift_up",
+            "on-scroll-down": "shift_down"
+        }
+    },
+ // Sys tray
+        "tray": {
+        "icon-size": 18,
+        "show-passive-items": true,
+        "spacing": 10,
+        "reverse-direction": true
+    },
+
+    "cpu": {
+    "format": "<span color='#7aa2f7'></span> {usage}%",
+    "interval": 1
+    },
+  
+     "disk": {
+        "format": "<span color='#e0af68'>󰋊</span> {used}",
+        "interval": 1,
+        "on-click": "gnome-disks",
+        "on-click-right": "killall gnome-disks"
+    },
+
+    "custom/memory_gb": {
+    "exec": "~/.config/hypr/scripts/mem_gb.sh",
+    "interval": 5, 
+    "return-type": "json", // Lendo o JSON simples agora
+    "format": "<span color=\"#7dcfff\"></span> {text}Gb", 
+    "tooltip": true,
+    "on-click": "kitty btop"
+},
+
+   "memory": {
+    "interval": 5, 
+    "format": "<span color=\"#7dcfff\"></span> {used}", // O Waybar preenche {used} ou {perc}
+    "format-alt": "<span color=\"#7dcfff\"></span> {used:0}G/{total:0}G",
+    "tooltip": true,
+    "on-click": "kitty btop",
+    "on-click-right": "killall btop"
+    
+    }, 
+"mpris": {
+    "interval": 5,
+    "format": "{player_icon} {title}",
+    "format-paused": "{status_icon} <i>{title}</i>",
+    "player-icons": {
+        "chromium": "",
+        "default": "",
+        "firefox": "",
+        "kdeconnect": "",
+        "mopidy": "",
+        "mpv": "󰐹",
+        "spotify": "",
+        "vlc": "󰕼"
+    },
+    "status-icons": {
+        "paused": "󰐎",
+        "playing": "",
+        "stopped": ""
+    },
+    "max-length": 35,
+    "on-click-middle": "playerctl play-pause",
+    "on-click": "playerctl play-pause",
+    "on-click-right": "playerctl play-pause",
+    "scroll-step": 5.0,
+    "on-scroll-up": "~/.config/hypr/scripts/volume_control.sh --inc",
+    "on-scroll-down": "~/.config/hypr/scripts/volume_control.sh --dec",
+    "smooth-scrolling-threshold": 1
+},
+
+"custom/mpris": {
+    "exec": "~/.config/waybar/scripts/mpris_status.sh",
+    "tail": true,
+    "return-type": "text",
+    "tooltip": false,
+    "on-click-middle": "playerctl play-pause",
+    "on-click": "playerctl previous",
+    "on-click-right": "playerctl next"
+},
+   
+"custom/updater": {
+    "format": "<span color='#f75f5f'> </span>{text}",
+    "exec": "~/.config/hypr/scripts/waybar_updates.sh",
+    "interval": 14400,  // Mude para 300s (5 minutos) ou o tempo que desejar
+    "return-type": "json",
+    "on-click": "kitty --hold bash -c '$HOME/.config/hypr/scripts/upgrade.sh;'",
+    "on-click-right": "kitty bash -c 'echo \"📦 Atualizações disponíveis:\"; echo; checkupdates 2>/dev/null; yay -Qum 2>/dev/null; echo; read -p \"Pressione Enter para fechar...\"'",
+    "signal": 8
+},
+   // Notification
+  "custom/notification": {
+    "tooltip": true,
+    "format": "<span size='14pt'>{icon}</span>",
+    "format-icons": {
+      "notification": "󱅫",
+      "none": "󰂜",
+      "dnd-notification": "󰂠",
+      "dnd-none": "󰪓",
+      "inhibited-notification": "󰂛",
+      "inhibited-none": "󰪑",
+      "dnd-inhibited-notification": "󰂛",
+      "dnd-inhibited-none": "󰪑"
+    },
+    "return-type": "json",
+    "exec-if": "which swaync-client",
+    "exec": "swaync-client -swb",
+    "on-click": "swaync-client -t -sw",
+    "on-click-right": "swaync-client -d -sw",
+    "escape": true
+  },
+  
+
+    "custom/media": {
+        "interval": 30,
+        "format": "{icon} {}",
+        "return-type": "json",
+        "max-length": 20,
+        "format-icons": {
+            "spotify": " ",
+            "default": " "
+        },
+        "escape": true,
+        "exec": "$HOME/.config/system_scripts/mediaplayer.py 2> /dev/null",
+        "on-click": "playerctl play-pause"
+    },
+   
+    "custom/launcher": {
+    "format": "<span foreground=\"#7aa2f7\"></span>",
+    "on-click": "wofi --show drun",
+    "on-click-right": "killall wofi"
+    },
+    "custom/power": {
+    "format": "<span color='#f75f5f'></span>",  // Ícone vermelho com span color
+    "tooltip": false,
+    "on-click": "wlogout -b 6",
+    "on-click-right": "wofi --show drun"
+    },
+
+    "custom/battery-alert": {
+    "exec": "~/.config/waybar/scripts/battery-alert.sh",
+    "interval": 60,
+    "return-type": "none"
+    }
+    }
